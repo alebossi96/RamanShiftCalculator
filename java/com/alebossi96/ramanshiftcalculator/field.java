@@ -2,7 +2,7 @@ package com.alebossi96.ramanshiftcalculator;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.Locale;
-
+//TODO estendere a m input e n output
 public abstract class field{
     TextView text1, text2, text3, textUm1, textUm2, textUm3;
     EditText edit0, edit1;
@@ -185,7 +185,7 @@ class Efficiency extends field
     {
         text1.setText("initial wavelength:");
         text2.setText("final wavelength:");
-        text3.setText("relative efficiency:");
+        text3.setText("relative Raman efficiency:");
         textUm1.setText("nm");
         textUm2.setText("nm");
         textUm3.setText("");

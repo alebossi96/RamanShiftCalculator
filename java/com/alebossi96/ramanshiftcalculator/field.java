@@ -1,19 +1,40 @@
 package com.alebossi96.ramanshiftcalculator;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class Field{
+public class field{
+    TextView text1, text2, text3, textUm1, textUm2, textUm3;
+    EditText edit0, edit1;
+    TextView  text0;
+    public field(TextView text1_, TextView text2_,TextView text3_,
+                   TextView textUm1_, TextView textUm2_, TextView textUm3_,
+                 EditText edit0_, EditText edit1_, TextView  text0_)
+    {
+        text1 = text1_;
+        text2 = text2_;
+        text3 = text3_;
+        textUm1 = textUm1_;
+        textUm2 = textUm2_;
+        textUm3 = textUm3_;
+        edit0 = edit0_;
+        edit1 = edit1_;
+        text0 = text0_;
+        setName();
+    }
     int get_num_decimal(double val)
     {
         String text = Double.toString(Math.abs(val));
         int integerPlaces = text.indexOf('.');
+        if((Math.abs(val) % 1) == 0)
+            return 0;
         int decimalPlaces = text.length() - integerPlaces - 1;
         return decimalPlaces;
     }
     int get_min_decimal(double val1, double val2)
     {
-    return Math.min(get_num_decimal(val1),get_num_decimal(val2));
+        return Math.min(get_num_decimal(val1),get_num_decimal(val2));
     }
     double round(double value, int decimal)
     {
@@ -26,38 +47,42 @@ public class Field{
     }
     double parseEdit(EditText edit)
     {
-        String val_string = edit0.getText().toString();
+        String val_string = edit.getText().toString();
         return Double.parseDouble(val_string);
     }
-    void setResult(EditText edit0, EditText edit1, TextView  text0)
+    void setResult()
     {
         double el1_value= parseEdit(edit0);
         double el2_value= parseEdit(edit1);
         int min_decimal = get_min_decimal(el1_value, el2_value);
         double result = 0;
-        if (!el1_value.equals("") &&  !el2_value.equals(""))
+        if (!edit0.equals("") &&  !edit1.equals(""))
         {
-            result = calc(el1, el2)
-            result = round(result);
+            result = calc(el1_value, el2_value);
+            result = round(result, min_decimal);
             if(min_decimal == 0)
-                text.setText(Integer.toString(result));
+                text0.setText(Integer.toString((int) result));
             else
                 text0.setText(Double.toString(result));
         }
     }
-    void setName(TextView text1, TextView text2,TextView text3,
-                   TextView textUm1, TextView textUm2, TextView textUm3)
+    void setName() { return; }
+    void changedState(TextView edit)
     {
-        return;
+        edit.setText("");
     }
-                     
 }
 
-public class PumpWnShift extends Field
+class PumpWnShift extends field
 {
+    public PumpWnShift(TextView text1_, TextView text2_,TextView text3_,
+                       TextView textUm1_, TextView textUm2_, TextView textUm3_,
+                       EditText edit0_, EditText edit1_, TextView  text0_) {
+        super(text1_, text2_, text3_, textUm1_, textUm2_, textUm3_, edit0_, edit1_, text0_);
+
+    }
     @Override
-    void setName(TextView text1, TextView text2,TextView text3,
-                   TextView textUm1, TextView textUm2, TextView textUm3 )
+    void setName()
     {
         text1.setText("Pump wavelength:");
         text2.setText("wavenumber");
@@ -72,12 +97,16 @@ public class PumpWnShift extends Field
         return 1.0 / (1.0 / tyndall - wn / 1e7);
     }
 }
-
-public class PumpRamanWl extends Field
+class PumpRamanWl extends field
 {
+    public PumpRamanWl(TextView text1_, TextView text2_,TextView text3_,
+                       TextView textUm1_, TextView textUm2_, TextView textUm3_,
+                       EditText edit0_, EditText edit1_, TextView  text0_) {
+        super(text1_, text2_, text3_, textUm1_, textUm2_, textUm3_, edit0_, edit1_, text0_);
+    }
+
     @Override
-    void setName(TextView text1, TextView text2,TextView text3,
-                   TextView textUm1, TextView textUm2, TextView textUm3 )
+    void setName()
     {
         text1.setText("Pump wavelength:");
         text2.setText("Raman wavelength:");
@@ -92,11 +121,17 @@ public class PumpRamanWl extends Field
         return (1.0 / tyndall - 1.0/wn)*1e7;
     }
 }
-public class RamanWlShift extends Field
+class RamanWlShift extends field
 {
+    public RamanWlShift(TextView text1_, TextView text2_,TextView text3_,
+                        TextView textUm1_, TextView textUm2_, TextView textUm3_,
+                        EditText edit0_, EditText edit1_, TextView  text0_)
+    {
+        super(text1_, text2_, text3_, textUm1_, textUm2_, textUm3_, edit0_, edit1_, text0_);
+    }
+
     @Override
-    void setName(TextView text1, TextView text2,TextView text3,
-                   TextView textUm1, TextView textUm2, TextView textUm3 )
+    void setName()
     {
         text1.setText("Raman wavelength:");
         text2.setText("wavenumber");
@@ -111,11 +146,17 @@ public class RamanWlShift extends Field
         return 1.0 / (1.0 / wl + wn / 1e7);
     }
 }
-public class Efficiency extends Field
+class Efficiency extends field
 {
+    public Efficiency(TextView text1_, TextView text2_,TextView text3_,
+                      TextView textUm1_, TextView textUm2_, TextView textUm3_,
+                      EditText edit0_, EditText edit1_, TextView  text0_)
+    {
+        super(text1_, text2_, text3_, textUm1_, textUm2_, textUm3_, edit0_, edit1_, text0_);
+    }
+
     @Override
-    void setName(TextView text1, TextView text2,TextView text3,
-                   TextView textUm1, TextView textUm2, TextView textUm3 )
+    void setName()
     {
         text1.setText("initial wavelength:");
         text2.setText("final wavelength:");
@@ -130,4 +171,3 @@ public class Efficiency extends Field
         return Math.pow(wl0*1.0/wl1,4);
     }
 }
-

@@ -3,7 +3,6 @@ package com.alebossi96.ramanshiftcalculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,37 +33,28 @@ public class MainActivity extends AppCompatActivity {
         TextView textUm2 = (TextView)findViewById(R.id.textUm2);
         TextView textUm3 = (TextView)findViewById(R.id.textUm3);
         newState = new PumpWnShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-        clickButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    newState.setResult();
-                }
-
-        });
-        toggleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newState.changedState(edit3);
-                if(state == 0){
-                    state++;
-                    newState = new PumpRamanWl(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                    //case1name(text1,text2,text3,textUm1,textUm2,textUm3);
-                }
-                else if(state == 1){
-                    state++;
-                    newState = new RamanWlShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                    //case2name(text1,text2,text3,textUm1,textUm2,textUm3);
-                }
-                else if(state==2){
-                    state ++;
-                    newState = new Efficiency(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                    //case3name(text1,text2,text3,textUm1,textUm2,textUm3);
-                }
-                else if(state==3){
-                    state =0;
-                    newState = new PumpWnShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                    //case0name(text1,text2,text3,textUm1,textUm2,textUm3);
-                }
+        clickButton.setOnClickListener(v -> newState.setResult());
+        toggleButton.setOnClickListener(view -> {
+            newState.changedState(edit3);
+            if(state == 0){
+                state++;
+                newState = new PumpRamanWl(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
+                //case1name(text1,text2,text3,textUm1,textUm2,textUm3);
+            }
+            else if(state == 1){
+                state++;
+                newState = new RamanWlShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
+                //case2name(text1,text2,text3,textUm1,textUm2,textUm3);
+            }
+            else if(state==2){
+                state ++;
+                newState = new Efficiency(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
+                //case3name(text1,text2,text3,textUm1,textUm2,textUm3);
+            }
+            else if(state==3){
+                state =0;
+                newState = new PumpWnShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
+                //case0name(text1,text2,text3,textUm1,textUm2,textUm3);
             }
         });
     }

@@ -1,9 +1,6 @@
 package com.alebossi96.ramanshiftcalculator;
-import android.annotation.SuppressLint;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.Locale;
 
 public abstract class field{
@@ -93,6 +90,10 @@ public abstract class field{
     abstract double calc(double el1, double el2);
     abstract void setName();
 }
+
+
+
+
 
 class PumpWnShift extends field
 {
@@ -191,7 +192,6 @@ class Efficiency extends field
     }
     double calc(double wl0, double wl1)
     {
-        //TODO dovrei modificare la storia che prende le sole cifre decimali
         return Math.pow(wl0/wl1,4);
     }
 }

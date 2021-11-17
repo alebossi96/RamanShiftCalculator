@@ -2,7 +2,14 @@ package com.alebossi96.ramanshiftcalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,24 +46,44 @@ public class MainActivity extends AppCompatActivity {
             if(state == 0){
                 state++;
                 newState = new PumpRamanWl(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                //case1name(text1,text2,text3,textUm1,textUm2,textUm3);
             }
             else if(state == 1){
                 state++;
                 newState = new RamanWlShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                //case2name(text1,text2,text3,textUm1,textUm2,textUm3);
             }
             else if(state==2){
                 state ++;
                 newState = new Efficiency(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                //case3name(text1,text2,text3,textUm1,textUm2,textUm3);
             }
             else if(state==3){
                 state =0;
                 newState = new PumpWnShift(text1, text2, text3, textUm1, textUm2, textUm3, edit1, edit2, edit3);
-                //case0name(text1,text2,text3,textUm1,textUm2,textUm3);
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+            if (id == R.id.sourceCode)
+            {
+                String url = "https://github.com/alebossi96/RamanShiftCalculator";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+
     }
 
 }
